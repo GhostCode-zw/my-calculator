@@ -17,3 +17,5 @@ application = get_wsgi_application()
 
 # Vercel expects 'app' variable
 app = application
+# Add this line at the very end
+app = application
