@@ -1,0 +1,481 @@
+/* ====================
+   NEON FINANCIAL CALCULATOR CSS
+   Complete Neon Theme with Dark/Light Mode
+   ==================== */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Themes */
+:root {
+    /* Dark Theme Colors */
+    --primary-bg: #0a0a0a;
+    --secondary-bg: rgba(15, 15, 35, 0.9);
+    --glass-bg: rgba(20, 20, 40, 0.8);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --neon-primary: #00ffff;
+    --neon-secondary: #ff00ff;
+    --neon-accent: #ffff00;
+    --neon-success: #00ff00;
+    --neon-error: #ff0040;
+    --neon-warning: #ff8000;
+    --shadow-color: rgba(0, 255, 255, 0.3);
+    --border-color: rgba(0, 255, 255, 0.2);
+}
+
+.light-theme {
+    /* Light Theme Colors */
+    --primary-bg: #f0f0f5;
+    --secondary-bg: rgba(255, 255, 255, 0.9);
+    --glass-bg: rgba(240, 240, 255, 0.8);
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --neon-primary: #0080ff;
+    --neon-secondary: #8000ff;
+    --neon-accent: #ff6600;
+    --neon-success: #00cc00;
+    --neon-error: #ff0040;
+    --neon-warning: #ff8000;
+    --shadow-color: rgba(0, 128, 255, 0.3);
+    --border-color: rgba(0, 128, 255, 0.2);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: all 0.5s ease;
+}
+
+/* Dynamic Background */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(45deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    transition: background 0.5s ease;
+}
+
+.light-theme .background-container {
+    background: linear-gradient(45deg, #f0f0f5 0%, #e6e6fa 50%, #f5f5f5 100%);
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header Styles */
+.header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin: 20px 0;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.neon-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--neon-primary);
+    text-shadow: 0 0 10px var(--neon-primary);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: relative;
+}
+
+.theme-switch {
+    display: none;
+}
+
+.theme-label {
+    display: flex;
+    align-items: center;
+    width: 60px;
+    height: 30px;
+    background: var(--glass-bg);
+    border: 2px solid var(--neon-primary);
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: var(--neon-primary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.theme-switch:checked + .theme-label .toggle-slider {
+    left: 33px;
+    background: var(--neon-accent);
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.neon-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    text-decoration: none;
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.neon-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px var(--shadow-color);
+    border-color: var(--neon-primary);
+    color: var(--neon-primary);
+}
+
+/* Calculator Container */
+.neon-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.calculator-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.neon-subtitle {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    color: var(--neon-primary);
+    margin-bottom: 10px;
+}
+
+.calculator-desc {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+/* Neon Calculator Styles */
+.neon-calculator {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.neon-display {
+    margin-bottom: 25px;
+}
+
+.display-screen {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--neon-primary);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.neon-history {
+    color: var(--neon-secondary);
+    font-size: 1.1rem;
+    font-family: 'Orbitron', monospace;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.neon-input {
+    width: 100%;
+    height: 60px;
+    background: transparent;
+    border: none;
+    color: var(--neon-primary);
+    font-size: 2.5rem;
+    font-family: 'Orbitron', monospace;
+    text-align: right;
+    outline: none;
+}
+
+/* Neon Buttons */
+.neon-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.neon-btn {
+    height: 70px;
+    background: var(--glass-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    font-size: 1.5rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.neon-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px var(--shadow-color);
+    border-color: var(--neon-primary);
+    color: var(--neon-primary);
+}
+
+.neon-btn:active {
+    transform: translateY(0);
+}
+
+/* Button Types */
+.btn-number {
+    color: var(--text-primary);
+}
+
+.btn-operator {
+    color: var(--neon-secondary);
+}
+
+.btn-operator:hover {
+    border-color: var(--neon-secondary);
+    color: var(--neon-secondary);
+}
+
+.btn-clear {
+    color: var(--neon-error);
+}
+
+.btn-clear:hover {
+    border-color: var(--neon-error);
+    color: var(--neon-error);
+}
+
+.btn-equals {
+    grid-column: span 2;
+    color: var(--neon-success);
+}
+
+.btn-equals:hover {
+    border-color: var(--neon-success);
+    color: var(--neon-success);
+}
+
+.btn-zero {
+    grid-column: span 2;
+}
+
+/* Form Styles */
+.neon-form {
+    width: 100%;
+}
+
+.neon-form-group {
+    margin-bottom: 30px;
+}
+
+.neon-label {
+    display: block;
+    color: var(--text-primary);
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.neon-form-input {
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 0 20px;
+    font-size: 1.3rem;
+    font-family: 'Orbitron', monospace;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.neon-form-input:focus {
+    outline: none;
+    border-color: var(--neon-primary);
+    color: var(--neon-primary);
+}
+
+/* Results Section */
+.neon-results {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid var(--border-color);
+}
+
+.results-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    color: var(--neon-primary);
+}
+
+.neon-result-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.neon-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Orbitron', monospace;
+}
+
+.neon-result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: var(--text-secondary);
+}
+
+.neon-value {
+    color: var(--neon-primary);
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .neon-container {
+        padding: 25px 20px;
+        margin: 15px;
+    }
+    
+    .neon-title {
+        font-size: 2rem;
+    }
+    
+    .neon-buttons {
+        gap: 10px;
+    }
+    
+    .neon-btn {
+        height: 60px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .neon-container {
+        padding: 20px 15px;
+    }
+    
+    .neon-title {
+        font-size: 1.5rem;
+    }
+    
+    .neon-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Animations */
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--neon-primary);
+    }
+    50% {
+        text-shadow: 0 0 20px var(--neon-primary);
+    }
+}
+
+.neon-text {
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+/* Theme Toggle Animation */
+.theme-label {
+    transition: all 0.3s ease;
+}
+
+.theme-label:hover {
+    box-shadow: 0 0 20px var(--neon-primary);
+}
+
+/* Footer */
+.footer {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    margin: 20px 0;
+    padding: 25px;
+    text-align: center;
+}
+
+.footer-content {
+    color: var(--text-secondary);
+    font-family: 'Orbitron', monospace;
+}

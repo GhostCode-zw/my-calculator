@@ -1,0 +1,188 @@
+/* Professional Glassmorphism and Neon Inspired CSS for Financial Calculator */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-bg: #0f172a;
+    --secondary-bg: rgba(15, 23, 42, 0.75);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --text-primary: #e0e7ff;
+    --text-secondary: #94a3b8;
+    --neon-primary: #00f0ff;
+    --neon-secondary: #ff00ff;
+    --neon-accent: #ffcc00;
+    --neon-success: #00ff88;
+    --neon-error: #ff0044;
+    --neon-warning: #ff8800;
+    --shadow-color: rgba(0, 255, 255, 0.4);
+    --border-color: rgba(0, 255, 255, 0.25);
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    min-height: 80vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background 0.5s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1 0 auto;
+}
+
+.navbar {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--shadow-color);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--neon-primary) !important;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+    text-shadow: 0 0 10px var(--neon-primary);
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--neon-accent) !important;
+    text-shadow: 0 0 20px var(--neon-accent);
+}
+
+main {
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 0 40px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    flex: 1 0 auto;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-primary);
+    text-shadow: 0 0 15px var(--neon-primary);
+    margin-bottom: 20px;
+}
+
+button, .btn {
+    background: var(--glass-bg);
+    border: 2px solid var(--neon-primary);
+    color: var(--neon-primary);
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background: var(--neon-primary);
+    color: var(--primary-bg);
+    box-shadow: 0 0 40px var(--neon-primary);
+    transform: translateY(-3px);
+}
+
+input, select {
+    background: var(--glass-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 20px var(--neon-primary);
+    color: var(--neon-primary);
+}
+
+.result-card {
+    background: var(--secondary-bg);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 30px;
+    box-shadow: 0 0 30px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: 'Orbitron', monospace;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-weight: 600;
+    color: var(--neon-secondary);
+}
+
+.result-value {
+    font-weight: 700;
+    color: var(--neon-primary);
+    text-shadow: 0 0 10px var(--neon-primary);
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--text-secondary);
+    font-family: 'Orbitron', monospace;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    flex-shrink: 0;
+    background: var(--secondary-bg);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 -2px 10px var(--shadow-color);
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+    main {
+        padding: 30px 20px;
+    }
+    button, .btn {
+        width: 100%;
+        padding: 15px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h2, h3 {
+        font-size: 1.5rem;
+    }
+    button, .btn {
+        font-size: 1rem;
+    }
+}

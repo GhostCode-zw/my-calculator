@@ -1,0 +1,72 @@
+{% extends 'calculator_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Installment Calculator</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Loan EMI Calculator</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="principal" class="form-label">Loan Amount ($)</label>
+                                <input type="number" class="form-control" id="principal" name="principal" 
+                                       value="{{ principal }}" step="0.01" placeholder="e.g., 10000" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="annual_rate" class="form-label">Annual Interest Rate (%)</label>
+                                <input type="number" class="form-control" id="annual_rate" name="annual_rate" 
+                                       value="{{ annual_rate }}" step="0.01" placeholder="e.g., 5.5" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="months" class="form-label">Loan Term (months)</label>
+                                <input type="number" class="form-control" id="months" name="months" 
+                                       value="{{ months }}" placeholder="e.g., 60" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Calculate EMI</button>
+                    </form>
+                    
+                    {% if error %}
+                        <div class="alert alert-danger mt-3">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if emi %}
+                        <div class="results-section mt-3">
+                            <h3>Monthly EMI</h3>
+                            <div class="result-card">
+                                <div class="result-item">
+                                    <span class="result-label">Monthly EMI:</span>
+                                    <span class="result-value">${{ emi }}</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Total Payment:</span>
+                                    <span class="result-value">${{ total_payment }}</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Total Interest:</span>
+                                    <span class="result-value">${{ total_interest }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

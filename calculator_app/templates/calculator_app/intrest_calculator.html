@@ -1,0 +1,195 @@
+{% extends 'calculator_app/base.html' %}
+
+{% block title %}Interest Calculator - Financial Calculator{% endblock %}
+
+{% block content %}
+<div class="calculator-container">
+    <div class="calculator-header">
+        <h2><i class="fas fa-percentage"></i> Interest Calculator</h2>
+        <p>Calculate simple interest on your investments</p>
+    </div>
+
+    <div class="interest-calculator">
+        <form method="post" id="interestForm" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="principal">
+                    <i class="fas fa-dollar-sign"></i>
+                    Principal Amount ($)
+                </label>
+                <input 
+                    type="number" 
+                    id="principal" 
+                    name="principal" 
+                    class="form-input"
+                    placeholder="Enter principal amount"
+                    value="{{ principal }}"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+                <div class="input-error" id="principalError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="rate">
+                    <i class="fas fa-chart-line"></i>
+                    Annual Interest Rate (%)
+                </label>
+                <input 
+                    type="number" 
+                    id="rate" 
+                    name="rate" 
+                    class="form-input"
+                    placeholder="Enter interest rate"
+                    value="{{ rate }}"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+                <div class="input-error" id="rateError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="time">
+                    <i class="fas fa-clock"></i>
+                    Time Period (Years)
+                </label>
+                <input 
+                    type="number" 
+                    id="time" 
+                    name="time" 
+                    class="form-input"
+                    placeholder="Enter time in years"
+                    value="{{ time }}"
+                    step="0.1"
+                    min="0"
+                    required
+                >
+                <div class="input-error" id="timeError"></div>
+            </div>
+
+            <button type="submit" class="btn-calculate">
+                <i class="fas fa-calculator"></i>
+                Calculate Interest
+            </button>
+        </form>
+
+        <!-- Results Section -->
+        {% if interest and total_amount %}
+        <div class="results-section">
+            <h3><i class="fas fa-chart-pie"></i> Calculation Results</h3>
+            
+            <div class="result-card">
+                <div class="result-item">
+                    <span class="result-label">Principal Amount:</span>
+                    <span class="result-value">${{ principal }}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Interest Rate:</span>
+                    <span class="result-value">{{ rate }}%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Time Period:</span>
+                    <span class="result-value">{{ time }} years</span>
+                </div>
+                <div class="result-item highlight">
+                    <span class="result-label">Interest Earned:</span>
+                    <span class="result-value">${{ interest }}</span>
+                </div>
+                <div class="result-item total">
+                    <span class="result-label">Total Amount:</span>
+                    <span class="result-value">${{ total_amount }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="result-display error">
+            <i class="fas fa-exclamation-circle"></i>
+            <strong>Error:</strong> {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    // Form validation
+    document.getElementById('interestForm').addEventListener('submit', function(e) {
+        let isValid = true;
+        
+        // Clear previous errors
+        document.querySelectorAll('.input-error').forEach(error => {
+            error.textContent = '';
+        });
+        
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.classList.remove('error');
+        });
+        
+        // Validate principal
+        const principal = document.getElementById('principal');
+        const principalValue = parseFloat(principal.value);
+        if (!principal.value || principalValue <= 0) {
+            showError('principal', 'Principal amount must be greater than 0');
+            isValid = false;
+        }
+        
+        // Validate rate
+        const rate = document.getElementById('rate');
+        const rateValue = parseFloat(rate.value);
+        if (!rate.value || isNaN(rateValue) || rateValue < 0) {
+            showError('rate', 'Please enter a valid interest rate (cannot be negative)');
+            isValid = false;
+        }
+        
+        // Validate time
+        const time = document.getElementById('time');
+        const timeValue = parseFloat(time.value);
+        if (!time.value || timeValue <= 0) {
+            showError('time', 'Time period must be greater than 0');
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+    
+    function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorDiv = document.getElementById(fieldId + 'Error');
+        
+        field.classList.add('error');
+        errorDiv.textContent = message;
+    }
+    
+    // Real-time validation
+    document.querySelectorAll('.form-input').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('error');
+            const errorDiv = document.getElementById(this.id + 'Error');
+            if (errorDiv) {
+                errorDiv.textContent = '';
+            }
+        });
+    });
+    
+    // Format currency inputs
+    document.getElementById('principal').addEventListener('blur', function() {
+        if (this.value && !isNaN(this.value)) {
+            this.value = parseFloat(this.value).toFixed(2);
+        }
+    });
+    
+    document.getElementById('rate').addEventListener('blur', function() {
+        if (this.value && !isNaN(this.value)) {
+            this.value = parseFloat(this.value).toFixed(2);
+        }
+    });
+</script>
+{% endblock %}

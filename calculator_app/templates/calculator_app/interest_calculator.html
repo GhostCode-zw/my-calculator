@@ -1,0 +1,56 @@
+{% extends 'calculator_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Interest Calculator</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Simple Interest Calculator</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="principal" class="form-label">Principal Amount ($)</label>
+                            <input type="number" class="form-control" id="principal" name="principal" 
+                                   value="{{ principal }}" step="0.01" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rate" class="form-label">Interest Rate (%)</label>
+                            <input type="number" class="form-control" id="rate" name="rate" 
+                                   value="{{ rate }}" step="0.01" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="time" class="form-label">Time Period (years)</label>
+                            <input type="number" class="form-control" id="time" name="time" 
+                                   value="{{ time }}" step="0.01" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Calculate Interest</button>
+                    </form>
+                    
+                    {% if error %}
+                        <div class="alert alert-danger mt-3">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if interest %}
+                        <div class="alert alert-success mt-3">
+                            <h6>Results:</h6>
+                            <p><strong>Simple Interest:</strong> ${{ interest }}</p>
+                            <p><strong>Total Amount:</strong> ${{ total_amount }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

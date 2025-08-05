@@ -1,0 +1,98 @@
+{% extends 'calculator_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Standard Calculator</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Basic Arithmetic Calculator</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="calcForm">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="expression" class="form-label">Enter Expression</label>
+                            <input type="text" class="form-control" id="expression" name="expression" 
+                                   placeholder="e.g., 15 + 7 * 2" required autocomplete="off" readonly>
+                            <small class="form-text text-muted">
+                                Use +, -, ×, ÷ for operations. Parentheses are supported.
+                            </small>
+                        </div>
+                        
+                        <div class="button-grid mb-3">
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">7</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">8</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">9</button>
+                            <button type="button" class="btn btn-warning m-1 calc-btn">+</button>
+                            
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">4</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">5</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">6</button>
+                            <button type="button" class="btn btn-warning m-1 calc-btn">-</button>
+                            
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">1</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">2</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">3</button>
+                            <button type="button" class="btn btn-warning m-1" id="multiplyBtn">×</button>
+                            
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">0</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">.</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">(</button>
+                            <button type="button" class="btn btn-secondary m-1 calc-btn">)</button>
+                            <button type="button" class="btn btn-warning m-1" id="divideBtn">÷</button>
+                            <button type="button" class="btn btn-danger m-1" id="clearBtn">Clear</button>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Calculate</button>
+                    </form>
+                    
+                    {% if error %}
+                        <div class="alert alert-danger mt-3">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if result %}
+                        <div class="alert alert-success mt-3">
+                            <h6>Result:</h6>
+                            <p class="fs-4">{{ result }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const expressionInput = document.getElementById('expression');
+    const buttons = document.querySelectorAll('.calc-btn');
+    const multiplyBtn = document.getElementById('multiplyBtn');
+    const divideBtn = document.getElementById('divideBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            expressionInput.value += button.textContent;
+        });
+    });
+
+    multiplyBtn.addEventListener('click', () => {
+        expressionInput.value += '*';
+    });
+
+    divideBtn.addEventListener('click', () => {
+        expressionInput.value += '/';
+    });
+
+    clearBtn.addEventListener('click', () => {
+        expressionInput.value = '';
+    });
+});
+</script>
+{% endblock %}
